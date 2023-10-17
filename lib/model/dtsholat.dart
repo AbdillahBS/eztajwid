@@ -28,7 +28,12 @@ List<sholat> slt = [
 
 String tgl() {
   
-  final now = DateTime.now();
-  final formatter = DateFormat('EEEE, d MMMM y','id');
+  var now = DateTime.now();
+  var formatter = DateFormat('EEEE, d MMMM y');
   return formatter.format(now);
 }
+ String waktu() {
+    var now = DateTime.now();
+    var formattedTime = DateFormat.Hm().format(now);
+    return formattedTime;
+ }

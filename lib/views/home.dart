@@ -3,6 +3,7 @@ import 'package:eztajwid/model/dtsholat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Home extends StatefulWidget {
@@ -74,7 +75,7 @@ class _HomeState extends State<Home> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 image: const DecorationImage(
-                    image: AssetImage("assets/images/masjid.jpg"),
+                    image: AssetImage("assets/images/masjid1.png"),
                     fit: BoxFit.cover),
               ),
               child: Column(
@@ -101,12 +102,12 @@ class _HomeState extends State<Home> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white.withOpacity(0.4),
+                      color: Colors.white.withOpacity(0.7),
                     ),
                     child: Column(
                       children: [
                         Text(
-                          "03.50 PM",
+                          waktu(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 26),
                         ),
