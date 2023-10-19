@@ -56,8 +56,10 @@ class quran extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  child: Image.asset("assets/images/quran.png"),
+                Expanded(
+                  child: Container(
+                    child: Image.asset("assets/images/quran.png"),
+                  ),
                 )
               ],
             ),

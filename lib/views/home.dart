@@ -118,6 +118,7 @@ class Home extends StatelessWidget {
                 ],
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(15),
               child: GridView.builder(
