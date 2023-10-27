@@ -1,11 +1,39 @@
+import 'package:eztajwid/api/quranapi.dart';
+import 'package:eztajwid/model/dtquran.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class quran extends StatelessWidget {
-  const quran({Key? key});
+class quran extends StatefulWidget {
+  const quran({Key? key}) : super(key: key);
+  
 
   @override
+  State<quran> createState() => _quranState();
+}
+
+class _quranState extends State<quran> {
+  List<Surah> surahList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    initSurahList();
+  }
+
+  void initSurahList() async {
+    try {
+      final result = await getSurah();
+      setState(() {
+        surahList = result;
+      });
+    } catch (e) {
+      // Tangani kesalahan jika terjadi
+      print('Error: $e');
+    }
+  }
+  @override
   Widget build(BuildContext context) {
+     
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -98,16 +126,20 @@ class quran extends StatelessWidget {
                     final surahNumber = index + 1;
                     return Column(
                       children: [
-                        ListTile(
+                        ListTile( 
                           title: Text(
-                            "$surahNumber. ${surah['name']}",
+                            "$surahNumber. ${surah.englishName}",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(surah.indo),
+                          ),
                           trailing: Text(
-                            surah['nameArabic'],
+                            surah.name,
                             style: GoogleFonts.lateef(
                                 fontSize: 25,
-                                // fontWeight: FontWeight.bold,
+                          
                                 fontStyle: FontStyle.italic),
                           ),
                           onTap: () {
@@ -127,13 +159,3 @@ class quran extends StatelessWidget {
   }
 }
 
-final List<Map<String, dynamic>> surahList = [
-  {"name": "Al-Fatiha", "nameArabic": "الفاتحة"},
-  {"name": "Al-Baqarah", "nameArabic": "البقرة"},
-  {"name": "Al-Imran", "nameArabic": "آل عمران"},
-  {"name": "An-Nisa", "nameArabic": "النساء"},
-  {"name": "Al-Ma'idah", "nameArabic": "المائدة"},
-  {"name": "Al-An'am", "nameArabic": "الأنعام"},
-  {"name": "Al-A'raf", "nameArabic": "الأعراف"},
-  // Tambahkan surah lainnya di sini
-];
