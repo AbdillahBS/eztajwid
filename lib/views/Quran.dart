@@ -1,5 +1,6 @@
 import 'package:eztajwid/api/quranapi.dart';
 import 'package:eztajwid/model/dtquran.dart';
+import 'package:eztajwid/views/DetailSurah.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,7 +23,7 @@ class _quranState extends State<quran> {
 
   void initSurahList() async {
     try {
-      final result = await getSurah();
+      final result = await getSurahWithAyat();
       setState(() {
         surahList = result;
       });
@@ -143,6 +144,7 @@ class _quranState extends State<quran> {
                                 fontStyle: FontStyle.italic),
                           ),
                           onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SurahDetailPage(surah: surah),));
                           },
                         ),
                         Divider(thickness: 1)

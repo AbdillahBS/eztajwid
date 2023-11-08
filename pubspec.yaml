@@ -44,6 +44,7 @@ dependencies:
   location: ^4.4.0
   intl: ^0.18.1
   get_localization: ^3.0.0
+  quran: ^1.2.2
 
 dev_dependencies:
   flutter_test:
