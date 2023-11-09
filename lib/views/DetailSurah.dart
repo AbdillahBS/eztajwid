@@ -1,10 +1,12 @@
 import 'package:eztajwid/model/dtquran.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quran/quran.dart' as quran;
 class SurahDetailPage extends StatelessWidget {
   final Surah surah;
+   final Surah? lastClickedSurah;
 
-  SurahDetailPage({required this.surah});
+  SurahDetailPage({required this.surah, this.lastClickedSurah});
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,7 @@ class SurahDetailPage extends StatelessWidget {
               title: Text(
                 quran.getVerse(surahNumber, index + 1, verseEndSymbol: true),
                 textAlign: TextAlign.right,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: GoogleFonts.lateef(fontSize: 28)
               ),
             );
           },

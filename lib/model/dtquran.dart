@@ -4,6 +4,7 @@ class Surah {
   String englishName;
   String indo;
   Ayat? ayat;
+  
 
   Surah({required this.number, required this.name, required this.englishName, required this.indo,  this.ayat});
 

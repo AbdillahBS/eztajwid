@@ -1,12 +1,12 @@
 import 'package:eztajwid/api/quranapi.dart';
 import 'package:eztajwid/model/dtquran.dart';
 import 'package:eztajwid/views/DetailSurah.dart';
+import 'package:eztajwid/views/detail2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class quran extends StatefulWidget {
   const quran({Key? key}) : super(key: key);
-  
 
   @override
   State<quran> createState() => _quranState();
@@ -14,6 +14,7 @@ class quran extends StatefulWidget {
 
 class _quranState extends State<quran> {
   List<Surah> surahList = [];
+  Surah? lastClickedSurah;
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _quranState extends State<quran> {
 
   void initSurahList() async {
     try {
-      final result = await getSurahWithAyat();
+      final result = await getSurahList();
       setState(() {
         surahList = result;
       });
@@ -32,9 +33,9 @@ class _quranState extends State<quran> {
       print('Error: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -72,9 +73,11 @@ class _quranState extends State<quran> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              "Surah Al-Fatiha",
+                              lastClickedSurah != null
+                                  ? "Surah ${lastClickedSurah!.englishName}"
+                                  : "Belum Ada Surah Terakhir",
                               style: TextStyle(
-                                fontSize: 24,
+                                fontSize: lastClickedSurah != null ? 24 : 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -127,7 +130,7 @@ class _quranState extends State<quran> {
                     final surahNumber = index + 1;
                     return Column(
                       children: [
-                        ListTile( 
+                        ListTile(
                           title: Text(
                             "$surahNumber. ${surah.englishName}",
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -139,12 +142,19 @@ class _quranState extends State<quran> {
                           trailing: Text(
                             surah.name,
                             style: GoogleFonts.lateef(
-                                fontSize: 25,
-                          
-                                fontStyle: FontStyle.italic),
+                                fontSize: 25, fontStyle: FontStyle.italic),
                           ),
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SurahDetailPage(surah: surah),));
+                            setState(() {
+                              lastClickedSurah = surah;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SurahDetailPage(
+                                      surah: surah,
+                                      lastClickedSurah: lastClickedSurah),
+                                ));
                           },
                         ),
                         Divider(thickness: 1)
@@ -160,4 +170,3 @@ class _quranState extends State<quran> {
     );
   }
 }
-
