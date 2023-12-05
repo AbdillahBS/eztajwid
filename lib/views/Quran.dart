@@ -1,7 +1,7 @@
 import 'package:eztajwid/api/quranapi.dart';
 import 'package:eztajwid/model/dtquran.dart';
 import 'package:eztajwid/views/DetailSurah.dart';
-import 'package:eztajwid/views/detail2.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -30,8 +30,8 @@ class _TasbihState extends State<Tasbih> {
   void resetTasbih() {
     setState(() {
       jumlahTasbih = 0;
-      putaran = 2 * 3.14; 
-      // _currentZker = 0; 
+      putaran = 2 * 3.14;
+      // _currentZker = 0;
     });
   }
 
@@ -41,7 +41,10 @@ class _TasbihState extends State<Tasbih> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.white,
-        title: const Text('Tasbih'),
+        title: const Text(
+          'Tasbih',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         padding: const EdgeInsets.all(20),
@@ -76,7 +79,6 @@ class _TasbihState extends State<Tasbih> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                 
                   Transform.rotate(
                     angle: putaran,
                     child: Image.asset(
@@ -96,7 +98,7 @@ class _TasbihState extends State<Tasbih> {
                 ],
               ),
             ),
-      
+
             const Text(
               'Jumlah Tasbih:',
               style: TextStyle(fontSize: 24),
@@ -109,9 +111,16 @@ class _TasbihState extends State<Tasbih> {
               ),
             ),
             const SizedBox(height: 15),
-            TextButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors
+                    .purple[100], // Ganti dengan warna ungu yang diinginkan
+              ),
               onPressed: jumlahTasbih >= 34 ? null : tambahTasbih,
-              child: const Text('Tambah Tasbih'),
+              child: const Text(
+                'Tambah Tasbih',
+                style: TextStyle(fontSize: 15, color: Colors.black),
+              ),
             ),
           ],
         ),

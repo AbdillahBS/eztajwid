@@ -1,12 +1,41 @@
 import 'dart:ui';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eztajwid/model/dtsholat.dart';
+import 'package:eztajwid/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+class Home extends StatefulWidget {
+  @override
+  State<Home> createState() => _HomeState();
+}
 
-class Home extends StatelessWidget {
+class _HomeState extends State<Home> {
+  List<Map<String, dynamic>> quotes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQuotes();
+  }
+
+  Future<void> fetchQuotes() async {
+    try {
+      final quotesQuery = FirebaseFirestore.instance.collection('quotes');
+      final querySnapshot = await quotesQuery.get();
+      final fetchedQuotes = querySnapshot.docs.map((doc) {
+        return doc.data();
+      }).toList();
+      setState(() {
+        quotes = fetchedQuotes;
+      });
+    } catch (e) {
+      // Handle potential errors (print, show an error message, etc.)
+      print('Error fetching quotes: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +52,10 @@ class Home extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {},
-                    icon: Image.asset("assets/images/logoezl.png")),
+                    icon: Image.asset(
+                      "assets/images/logoezl.png",
+                      height: 30,
+                    )),
                 const Text(
                   "EzLearning Tajwid",
                   style: TextStyle(
@@ -36,33 +68,6 @@ class Home extends StatelessWidget {
             ),
 
             const SizedBox(height: 10),
-            // Container(
-            //   padding: EdgeInsets.all(5),
-            //   margin: EdgeInsets.symmetric(horizontal: 15),
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(30),
-            //     color: Colors.white,
-            //   ),
-            //   child: TextField(
-            //     style: TextStyle(
-            //       fontSize: 18,
-            //       fontFamily: 'open sans',
-            //     ),
-            //     decoration: InputDecoration(
-            //         hintText: "cari materi yang di inginkan",
-            //         fillColor: Colors.transparent,
-            //         icon: Icon(Icons.search),
-            //         enabledBorder: UnderlineInputBorder(
-            //           borderSide: BorderSide.none,
-            //         ),
-            //         focusedBorder: UnderlineInputBorder(
-            //           borderSide: BorderSide.none,
-            //         )),
-            //   ),
-            // ),
-
-            // const SizedBox(height: 20),
-
             Container(
               margin: const EdgeInsets.all(10),
               padding: EdgeInsets.all(10),
@@ -77,22 +82,11 @@ class Home extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ListTile(
-                      title: Text(
-                        tgl(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "1 Rabiul Akhir 1145 H",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      trailing: Text(
-                        "31º",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      )),
+                    title: Text(
+                      tgl(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -105,12 +99,6 @@ class Home extends StatelessWidget {
                           waktu(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 26),
-                        ),
-                        Text(
-                          "Fajr » Kabupaten Banyuwangi",
-                          style: TextStyle(
-                            fontSize: 22,
-                          ),
                         ),
                       ],
                     ),
@@ -160,9 +148,6 @@ class Home extends StatelessWidget {
                               fontSize: 20,
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 30,
-                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -207,61 +192,115 @@ class Home extends StatelessWidget {
                           color: Color.fromARGB(255, 0, 78, 203),
                         ),
                       ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => const Materi()));
-                      //   },
-                      //   child: const Text(
-                      //     "lihat semua",
-                      //     style: TextStyle(
-                      //       color: Color.fromARGB(255, 0, 78, 203),
-                      //       fontSize: 15,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (final materi in materiList)
-                          Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              padding: const EdgeInsets.all(20),
-                              width: 300,
-                              height: 220,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white.withOpacity(0.6),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Image.asset(
-                                  //   materi['text1'],
-                                  //   height: 180/2,
-                                  //   width: 160/2,
-                                  // ),
-                                  Text(
-                                    materi['text1'],
-                                    style: GoogleFonts.lateef(
-                                      textStyle: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
+                  Container(
+                    height: 200,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: quotes.length + 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        var number = quotes.length + 1;
+                        if (index == quotes.length) {
+                          return Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            padding: const EdgeInsets.all(20),
+                            width: 300,
+                            height: 220,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.6),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text("Quotes"),
+                                              TextFormField(
+                                                decoration: InputDecoration(
+                                                  labelText: 'Teks Arab',
+                                                ),
+                                                onChanged: (String arb) {
+                                                  getarb(arb);
+                                                },
+                                              ),
+                                              TextFormField(
+                                                decoration: InputDecoration(
+                                                  labelText: 'Teks Terjemahan',
+                                                ),
+                                                onChanged: (String terjemah) {
+                                                  getterjemah(terjemah);
+                                                },
+                                              ),
+                                              SizedBox(height: 10),
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  create(
+                                                      context); // Panggil fungsi create() saat tombol ditekan
+                                                },
+                                                child: Text('Simpan'),
+                                              ),
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Tutup'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 28,
                                   ),
-
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    " \" " + materi['text2'] + " \" ",
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          // final materi = materiList[index];
+                          return Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            padding: const EdgeInsets.all(20),
+                            width: 200,
+                            // height: 220,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.6),
+                            ),
+                            child: ListView(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  quotes[index]['text1'],
+                                  style: GoogleFonts.lateef(
+                                    textStyle: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                ),
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: Text(
+                                    " \" " + quotes[index]['text2'] + " \" ",
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
@@ -270,11 +309,14 @@ class Home extends StatelessWidget {
                                     maxLines: 4,
                                     textAlign: TextAlign.center,
                                   ),
-                                ],
-                              )),
-                      ],
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
                     ),
-                  ),
+                  )
                 ],
               ),
             )
@@ -283,46 +325,41 @@ class Home extends StatelessWidget {
       ),
     );
   }
-}
 
-List<Map<String, dynamic>> materiList = [
-  {
-    'text1': 'ﻣَﻦْ ﺟَﺪَّ ﻭَﺟَﺪَ',
-    'text2': 'Barang siapa bersungguh-sungguh, maka ia akan dapat.',
-  },
-  {
-    'text1': ' ﺍﻟﻮَﻗْﺖُ ﺃَﺛْﻤَﻦُ ﻣِﻦَ ﺍﻟﺬَّﻫَﺐِ',
-    'text2': 'Waktu itu lebih mahal daripada emas',
-  },
-  {
-    'text1': 'ﺧَﻴْﺮُ ﺟَﻠِﻴْﺲٍ ﻓﻲِ ﺍﻟﺰَّﻣَﺎﻥِ ﻛِﺘَﺎﺏٌ',
-    'text2': 'Sebaik-baik teman duduk di setiap waktu adalah buku.',
-  },
-  {
-    'text1': 'ﻟَﻮْﻻَ ﺍﻟﻌِﻠْﻢُ ﻟَﻜَﺎﻥَ ﺍﻟﻨَّﺎﺱُ ﻛَﺎﻟﺒَﻬَﺎﺋِﻢِ',
-    'text2':
-        'Seandainya tidak ada ilmu agama, niscaya manusia itu seperti binatang.',
-  },
-  {
-    'text1': 'ﺍﻟﻌِﻠْﻢُ ﺑِﻼَ ﻋَﻤَﻞٍ ﻛَﺎﻟﺸَّﺠَﺮِ ﺑِﻼَ ﺛَﻤَﺮ',
-    'text2': ' Ilmu yang tidak diamalkan seperti pohon tidak berbuah.',
-  },
-  {
-    'text1': 'ﺍﻟﺸَّﺮَﻑُ ﺑِﺎﻷَﺩَﺏِ ﻻَ ﺑِﺎﻟﻨَّﺴَﺐِ',
-    'text2':
-        ' Kemuliaan itu diperoleh dengan adab kesopanan, bukan dengan keturunan.',
-  },
-  {
-    'text1': 'ﺃَﺻْﻠِﺢْ ﻧَﻔْﺴَﻚَ ﻳَﺼْﻠُﺢْ ﻟَﻚَ ﺍﻟﻨَّﺎﺱُ',
-    'text2':
-        'Perbaikilah dirimu sendiri, niscaya orang-orang lain akan baik kepadamu.',
-  },
-  {
-    'text1': 'ﻓَﻜِّﺮْ ﻗَﺒْﻞَ ﺃَﻥْ ﺗَﻌْﺰِﻡَ',
-    'text2': 'Berpikirlah dahulu sebelum kamu berkemauan (merencanakan).',
-  },
-  {
-    'text1': '',
-    'text2': '',
-  },
-];
+  var id, arab, terjemahan;
+
+  void getarb(String arb) {
+    this.arab = arb;
+  }
+
+  void getterjemah(String terjemah) {
+    this.terjemahan = terjemah;
+  }
+
+  void create(BuildContext context) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("quotes").doc(id);
+
+    documentReference.set({"text1": arab, "text2": terjemahan}).then((value) {
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Registration successful"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => Navbar()),
+                      (route) => false);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+}

@@ -41,10 +41,13 @@ dependencies:
   google_fonts: ^6.1.0
   smooth_compass: ^2.0.17
   flutter_svg: ^2.0.7
-  location: ^4.4.0
   intl: ^0.18.1
-  get_localization: ^3.0.0
   quran: ^1.2.2
+  html: ^0.15.4
+  firebase_core: ^2.23.0
+  cloud_firestore: ^4.13.2
+  firebase_auth: ^4.15.0
+  
 
 dev_dependencies:
   flutter_test:

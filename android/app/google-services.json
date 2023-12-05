@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030784763715",
+    "project_id": "eztajwid",
+    "storage_bucket": "eztajwid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030784763715:android:dc2f869a3723151ad091f6",
+        "android_client_info": {
+          "package_name": "com.example.eztajwid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_EHUzUHMi27qX78ADxKC5zeEyrGud3X8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

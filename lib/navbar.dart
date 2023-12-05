@@ -55,7 +55,8 @@ final iconList = <IconData>[
     onPressed: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Tasbih()));
     },
-    child: FaIcon(FontAwesomeIcons.spinner), // Ganti ikon sesuai dengan tindakan yang diinginkan
+    child: FaIcon(FontAwesomeIcons.spinner,color: Colors.white),
+    shape: CircleBorder(),
     backgroundColor: Color.fromARGB(255, 8, 54, 92), // Ganti warna sesuai dengan preferensi Anda
   ),
   floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
