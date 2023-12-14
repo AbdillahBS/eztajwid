@@ -1,4 +1,4 @@
-import 'package:eztajwid/model/auth_service.dart';
+import 'package:eztajwid/api/auth_service.dart';
 import 'package:eztajwid/navbar.dart';
 import 'package:eztajwid/views/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -345,7 +345,7 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Registration successful"),
+            title: Text("Quotes Tersimpan"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

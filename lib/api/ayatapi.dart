@@ -18,7 +18,7 @@ Future<List<Ayat>> getAyatList(int surahNumber) async {
   }
 }
 
-Future<Ayat> getAyatByIndex(int surahNumber, int ayatIndex) async {
+Future<Ayat> getAyat(int surahNumber, int ayatIndex) async {
   var ayatList = await getAyatList(surahNumber);
   var verseKey = '$surahNumber:$ayatIndex';
 

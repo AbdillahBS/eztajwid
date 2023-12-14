@@ -6,38 +6,38 @@ import 'package:eztajwid/views/tasbih.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
 
   @override
   State<Navbar> createState() => _NavbarState();
 }
+
 int _currentState = 0;
+
 class _NavbarState extends State<Navbar> {
-  void gantiPage (int state) {
-    setState(() {
-      
-    });}
+  void gantiPage(int state) {
+    setState(() {});
+  }
 
-    final pages =[
-      Home(),
-      Materi(),
-      quran(),
-      compas(),
-    ];
+  final pages = [
+    Home(),
+    Materi(),
+    quran(),
+    compas(),
+  ];
 
-final iconList = <IconData>[
-  FontAwesomeIcons.house,
-  FontAwesomeIcons.book,
-  FontAwesomeIcons.bookQuran,
-  FontAwesomeIcons.kaaba,
-];
+  final iconList = <IconData>[
+    FontAwesomeIcons.house,
+    FontAwesomeIcons.book,
+    FontAwesomeIcons.bookQuran,
+    FontAwesomeIcons.kaaba,
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: 
-      pages[_currentState],
-      
+      body: pages[_currentState],
       bottomNavigationBar: AnimatedBottomNavigationBar(
         backgroundColor: Color.fromARGB(255, 181, 186, 223),
         leftCornerRadius: 32,
@@ -48,19 +48,26 @@ final iconList = <IconData>[
         icons: iconList,
         activeIndex: _currentState,
         gapLocation: GapLocation.center,
-        activeColor: Colors.white, 
+        activeColor: Colors.white,
         onTap: (index) => setState(() => _currentState = index),
       ),
-       floatingActionButton: FloatingActionButton(
-    onPressed: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Tasbih()));
-    },
-    child: FaIcon(FontAwesomeIcons.spinner,color: Colors.white),
-    shape: CircleBorder(),
-    backgroundColor: Color.fromARGB(255, 8, 54, 92), // Ganti warna sesuai dengan preferensi Anda
-  ),
-  floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-     
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Tasbih()));
+        },
+        child: FaIcon(FontAwesomeIcons.spinner, color: Colors.white),
+        //     child: Image(
+        //   image: AssetImage("assets/icons/tasbih.png"),
+        //   alignment: Alignment.center,
+        //   // height: 40,
+        //   // width: 20,
+        // ),
+        shape: CircleBorder(),
+        backgroundColor: Color.fromARGB(
+            255, 8, 54, 92), // Ganti warna sesuai dengan preferensi Anda
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -15,6 +15,7 @@ class quran extends StatefulWidget {
 class _quranState extends State<quran> {
   List<Surah> surahList = [];
   Surah? lastClickedSurah;
+  String searchText = '';
 
   @override
   void initState() {
@@ -120,6 +121,18 @@ class _quranState extends State<quran> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Cari surah...',
+                    prefixIcon: Icon(Icons.search),
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      searchText = value
+                          .toLowerCase(); // Mengubah kata kunci ke huruf kecil
+                    });
+                  },
+                ),
                 SizedBox(height: 8),
                 ListView.builder(
                   shrinkWrap: true,
@@ -128,38 +141,47 @@ class _quranState extends State<quran> {
                   itemBuilder: (context, index) {
                     final surah = surahList[index];
                     final surahNumber = index + 1;
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            "$surahNumber. ${surah.englishName}",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+
+                    // Filter daftar surah sesuai dengan kata kunci pencarian
+                    if (searchText.isEmpty ||
+                        surah.englishName.toLowerCase().contains(searchText) ||
+                        surah.indo.toLowerCase().contains(searchText)) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              "$surahNumber. ${surah.englishName}",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(surah.indo),
+                            ),
+                            trailing: Text(
+                              surah.name,
+                              style: GoogleFonts.lateef(
+                                  fontSize: 25, fontStyle: FontStyle.italic),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                lastClickedSurah = surah;
+                              });
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SurahDetailPage(
+                                        surah: surah,
+                                        lastClickedSurah: lastClickedSurah),
+                                  ));
+                            },
                           ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(surah.indo),
-                          ),
-                          trailing: Text(
-                            surah.name,
-                            style: GoogleFonts.lateef(
-                                fontSize: 25, fontStyle: FontStyle.italic),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              lastClickedSurah = surah;
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SurahDetailPage(
-                                      surah: surah,
-                                      lastClickedSurah: lastClickedSurah),
-                                ));
-                          },
-                        ),
-                        Divider(thickness: 1)
-                      ],
-                    );
+                          Divider(thickness: 1)
+                        ],
+                      );
+                    } else {
+                      // Jika surah tidak sesuai dengan kata kunci pencarian, kembalikan Container kosong
+                      return Container();
+                    }
                   },
                 ),
               ],

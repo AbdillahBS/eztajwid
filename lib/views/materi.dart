@@ -45,85 +45,43 @@ class Materi extends StatelessWidget {
             final DataMateri data = dt[index];
             return InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) { return
-                  DetailMateri(data: data);
-                },));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return DetailMateri(data: data);
+                  },
+                ));
               },
               child: Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color.fromARGB(255, 181, 186, 223),
-                        ),
-                        child: Row(
-                          children: [
-                            // Image.asset(
-                            //   data.img,
-                            //   width: 60,
-                            // ),
-                            const SizedBox(width: 10),
-                            Text(
-                              data.nama,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                              maxLines: 2,
-                            )
-                          ],
-                        ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color.fromARGB(255, 181, 186, 223),
                       ),
-                    ],
-                  ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          Text(
+                            data.nama,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                            maxLines: 2,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+              ),
             );
-          
           },
-          // children: [
-           
-          //     Container(
-          //       padding: EdgeInsets.all(10),
-          //       child: Column(
-          //         children: [
-          //           Container(
-          //             padding: EdgeInsets.all(10),
-          //             decoration: BoxDecoration(
-          //               borderRadius: BorderRadius.circular(10),
-          //               color: Color.fromARGB(255, 181, 186, 223),
-          //             ),
-          //             child: Row(
-          //               children: [
-          //                 Image.asset(
-          //                   isi['image'],
-          //                   width: 60,
-          //                 ),
-          //                 SizedBox(width: 10),
-          //                 Text(
-          //                   isi['data'],
-          //                   style: TextStyle(
-          //                     fontWeight: FontWeight.bold,
-          //                     fontSize: 15,
-          //                   ),
-          //                   maxLines: 2,
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     )
-          
-          // ],
         ),
       ),
-     
     );
   }
 }
-
-
-
