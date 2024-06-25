@@ -1,6 +1,14 @@
 # eztajwid
 
-A new Flutter project.
+Flutter project.
+
+![image](https://github.com/AbdillahBS/eztajwid/assets/121353533/a233d7fe-ced9-4ac7-894a-d804e67cdb4f)
+![image](https://github.com/AbdillahBS/eztajwid/assets/121353533/636eb907-5625-40d7-b9d7-9786fc66e8db)
+![image](https://github.com/AbdillahBS/eztajwid/assets/121353533/7a255ab5-4df4-4c78-8249-7d2e725530ea)
+
+
+
+
 
 ## Getting Started
 
